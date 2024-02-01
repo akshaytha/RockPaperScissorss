@@ -1,0 +1,33 @@
+name: Maven Build and Goals
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v2
+
+    - name: Set up JDK
+      uses: actions/setup-java@v2
+      with:
+        distribution: 'adopt'
+        java-version: '11'
+
+    - name: Build Maven Project
+      run: mvn clean install -B
+
+    - name: Display Maven Goals Output
+      run: |
+        mvn --version
+        mvn help:describe -Dcmd=install
+        mvn help:describe -Dcmd=clean
+        mvn help:describe -Dcmd=test
+        mvn help:describe -Dcmd=compile
+        mvn help:describe -Dcmd=package
+        mvn help:describe -Dcmd=verify
+        mvn help:describe -Dcmd=site
+        mvn help:describe -Dcmd=deploy
+        mvn help:describe -Dcmd=dependency:analyze
